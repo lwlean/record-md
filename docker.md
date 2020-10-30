@@ -42,12 +42,27 @@ ENV 设置环境变量
 运行镜像 docker run -it --name [continerName] [imageName:version] /bin/bash
 进入运行的镜像 docker exec -it continerID /bin/bash
 从容器复制文件 docker cp continerName:[文件路径] 宿主机目录
-nginx挂载文件 docker run -d -p 8001:8001 -v c:/users/ll/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v c:/users/ll/.config/nginx/html/index.html:/etc/nginx/html/index.html --name nginx nginx:latest
-mysql挂载 docker run -d -p 3306:3306 -v c:/users/ll/.config/mysql:/etc/mysql -v c:/users/ll/.config/mysql/database:/var/lib/mysql --name mysql mysql:latest
+nginx挂载文件 docker run -d -p 8001:8001 -v c:/users/ll/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v c:/users/ll/docker/nginx/html/index.html:/etc/nginx/html/index.html --name nginx nginx:latest
+mysql挂载 docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v c:/users/ll/docker/mysql/database:/var/lib/mysql --name mysql mysql:5.7.32
+redis docker run -d -p 6379:6379 --name redis redis:latest redis-server
 查看镜像/容器详细信息 docker inspect dockerImageID|continerId|continerName
 docker 镜像内安装ps top等工具 apt update & apt install procps
+查看端口 docker port continerID|continerName
 ```
 
+# Docker Network
+
+```
+C:\Users\ll>docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+7ca0fd791450        bridge              bridge              local
+a99f0a6598ef        host                host                local
+a9f2c882edd1        none                null                local
+```
+
+
+
 # Docker Compose
+
 用于定义和运行多容器的docker工具
 
