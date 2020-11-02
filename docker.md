@@ -46,8 +46,8 @@ nginx挂载文件 docker run -d -p 8001:8001 -v c:/users/ll/docker/nginx/conf/ng
 mysql挂载 docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v c:/users/ll/docker/mysql/database:/var/lib/mysql --name mysql mysql:5.7.32
 redis docker run -d -p 6379:6379 --name redis redis:latest redis-server
 查看镜像/容器详细信息 docker inspect dockerImageID|continerId|continerName
-docker 镜像内安装ps top等工具 apt update & apt install procps
 查看端口 docker port continerID|continerName
+docker 镜像内安装ps top等工具 apt update & apt install procps
 ```
 
 # Docker Network
@@ -65,4 +65,26 @@ a9f2c882edd1        none                null                local
 # Docker Compose
 
 用于定义和运行多容器的docker工具
+
+```yml
+version: "3.8" #版本号 分为1.x 2.x 3.x 其中3.x时对应的1.14之后的版本
+services: # 启动多个服务
+  mysql:
+    container_name: "mysql-docker" # 容器名称
+    image: "mysql:5.7.32" # 镜像名称
+    ports: # 端口号
+      - "3306:3306"
+    environment: # 环境变量
+      MYSQL_ROOT_PASSWORD: 123456
+    networks: # 网络 需要自定义
+      - my_work
+    volumes: # 卷映射
+      - "c:/users/ll/docker/mysql/database:/var/lib/mysql"
+
+networks: # 自定义网络
+  my_work:
+    driver: bridge
+```
+
+
 
