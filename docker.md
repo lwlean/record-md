@@ -67,21 +67,39 @@ a9f2c882edd1        none                null                local
 用于定义和运行多容器的docker工具
 
 ```yml
-version: "3.8" #版本号 分为1.x 2.x 3.x 其中3.x时对应的1.14之后的版本
-services: # 启动多个服务
+version: "3.8"
+services:
   mysql:
-    container_name: "mysql-docker" # 容器名称
-    image: "mysql:5.7.32" # 镜像名称
-    ports: # 端口号
+    container_name: "mysql-docker"
+    image: "mysql:5.7.32"
+    ports:
       - "3306:3306"
-    environment: # 环境变量
+    environment:
       MYSQL_ROOT_PASSWORD: 123456
-    networks: # 网络 需要自定义
+    networks:
       - my_work
-    volumes: # 卷映射
+    volumes:
       - "c:/users/ll/docker/mysql/database:/var/lib/mysql"
+  nginx:
+    container_name: "nginx-docker"
+    image: "nginx:latest"
+    ports:
+      - "8001:8001"
+      - "8002:8002"
+    networks:
+      - my_work
+    volumes:
+      - "c:/users/ll/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "c:/users/ll/docker/nginx/html/index.html:/etc/nginx/html/index.html"
+  redis:
+    container_name: "redis-server-docker"
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - "my_work"
 
-networks: # 自定义网络
+networks:
   my_work:
     driver: bridge
 ```
